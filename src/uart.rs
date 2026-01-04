@@ -9,6 +9,8 @@ fn init_uart() {
     unsafe {
         let lcr: *mut u8 = (BASE as *mut u8).add(LCR_OFFSET);
         *lcr = 0x43;
+        let fcr: *mut u8 = (BASE as *mut u8).add(FCR_OFFSET);
+        *fcr = 0x0;
     }
 }
 
