@@ -5,6 +5,10 @@ const LCR_OFFSET: usize = 3;
 const FCR_OFFSET: usize = 2;
 const THR_OFFSET: usize = 0;
 
+/* I set the comm parameters to 8 data bits, one stop bit, no parity as recommended by https://www.lammertbies.nl/comm/info/serial-uart
+    I turn off FIFO
+    We'll see if this makes any difference
+*/
 fn init_uart() {
     unsafe {
         let lcr: *mut u8 = (BASE as *mut u8).add(LCR_OFFSET);
@@ -14,4 +18,9 @@ fn init_uart() {
     }
 }
 
-fn write_byte() {}
+fn write_byte(c: u8) {
+    let rbr: *mut u8 = RBR as *mut u8;
+    unsafe {
+        while *(BASE as *mut u8).add(LCR_OFFSET) & 0x10 == 0x10 {};
+        *rbr = c };
+}
