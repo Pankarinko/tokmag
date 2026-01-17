@@ -27,3 +27,7 @@ fn write_byte(c: u8) {
         write_volatile(rbr, c)
     };
 }
+
+fn write_text(text: &str) {
+    text.as_bytes().iter().for_each(|c| write_byte(*c));
+}
