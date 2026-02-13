@@ -11,7 +11,7 @@ const THR_OFFSET: usize = 0;
     I turn off FIFO
     We'll see if this makes any difference
 */
-fn init_uart() {
+pub fn init_uart() {
     unsafe {
         let lcr: *mut u8 = (BASE as *mut u8).add(LCR_OFFSET);
         write_volatile(lcr, 0x43);
@@ -20,7 +20,7 @@ fn init_uart() {
     }
 }
 
-fn write_byte(c: u8) {
+pub fn write_byte(c: u8) {
     let rbr: *mut u8 = RBR as *mut u8;
     unsafe {
         while *(BASE as *mut u8).add(LCR_OFFSET) & 0x10 == 0x10 {}
@@ -28,6 +28,6 @@ fn write_byte(c: u8) {
     };
 }
 
-fn write_text(text: &str) {
+pub fn write_text(text: &str) {
     text.as_bytes().iter().for_each(|c| write_byte(*c));
 }
