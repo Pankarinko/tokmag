@@ -4,12 +4,14 @@ target = "riscv64gc-unknown-none-elf"
 [target.riscv64gc-unknown-none-elf]
 rustflags = [
     
-    "-C", "link-args=-Tentry/linker.ld"
+    "-C", "link-args=-Tentry/linker.ld",
+    "-C", "link-arg=-Map=kernel.map",
     ]
 runner = """ qemu-system-riscv64 
     -machine virt 
     -cpu rv64 
     -m 128M 
     -nographic 
-    -bios
+    -bios none
+    -kernel
     """
